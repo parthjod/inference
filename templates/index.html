@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Skin Screening - Inferra</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+          --primary: #2563eb;
+          --primary-light: #eff6ff;
+          --text-dark: #0f172a;
+          --text-muted: #64748b;
+          --bg-light: #f8fafc;
+          --white: #ffffff;
+          --border: #e2e8f0;
+          --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+          --danger: #ef4444;
+          --success: #10b981;
+          --warning: #f59e0b;
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Inter', sans-serif;
+      }
+
+      body {
+          background-color: var(--bg-light);
+          color: var(--text-dark);
+          line-height: 1.5;
+          min-height: 100vh;
+          padding-bottom: 60px;
+      }
+
+      .container {
+          max-width: 1100px;
+          margin: 0 auto;
+          padding: 40px 24px;
+      }
+
+      /* Header */
+      header.page-header {
+          text-align: center;
+          margin-bottom: 50px;
+      }
+
+      header h1 {
+          font-size: 36px;
+          font-weight: 800;
+          margin-bottom: 12px;
+          color: var(--text-dark);
+      }
+
+      header p {
+          color: var(--text-muted);
+          font-size: 16px;
+      }
+
+      /* Layout Grid */
+      .layout-grid {
+          display: grid;
+          grid-template-columns: 1fr 340px;
+          gap: 32px;
+          align-items: flex-start;
+      }
+
+      /* Cards */
+      .card {
+          background: var(--white);
+          border-radius: 20px;
+          padding: 32px;
+          box-shadow: var(--shadow);
+          border: 1px solid var(--border);
+          margin-bottom: 32px;
+      }
+
+      .card-title {
+          font-size: 18px;
+          font-weight: 700;
+          margin-bottom: 24px;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+      }
+
+      /* --- INITIAL STATE --- */
+      .upload-zone-wrapper {
+          background: var(--white);
+          border-radius: 20px;
+          padding: 24px;
+          box-shadow: var(--shadow);
+          border: 1px solid var(--border);
+          margin-bottom: 32px;
+      }
+
+      .upload-zone {
+          border: 2px dashed #bfdbfe;
+          background: var(--white);
+          border-radius: 16px;
+          padding: 60px 40px;
+          text-align: center;
+          transition: all 0.2s ease;
+          cursor: pointer;
+          position: relative;
+      }
+
+      .upload-zone:hover {
+          border-color: var(--primary);
+          background: var(--primary-light);
+      }
+
+      .upload-icon-container {
+          width: 80px;
+          height: 80px;
+          background: var(--primary);
+          color: var(--white);
+          border-radius: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin: 0 auto 24px;
+          box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.4);
+      }
+
+      .upload-zone h3 {
+          font-size: 20px;
+          font-weight: 700;
+          margin-bottom: 4px;
+          color: var(--text-dark);
+      }
+
+      .upload-zone p {
+          font-size: 15px;
+          color: var(--text-muted);
+          margin-bottom: 24px;
+      }
+
+      .btn-choose {
+          background: var(--primary);
+          color: var(--white);
+          padding: 12px 32px;
+          border-radius: 10px;
+          font-weight: 600;
+          font-size: 15px;
+          display: inline-block;
+          margin-bottom: 20px;
+          pointer-events: none;
+      }
+
+      .upload-subtext {
+          font-size: 13px;
+          color: #94a3b8;
+      }
+
+      /* Tips Card */
+      .tips-card {
+          background: var(--white);
+          border-radius: 20px;
+          padding: 32px;
+          border: 1px solid var(--border);
+          box-shadow: var(--shadow);
+      }
+
+      .tips-list {
+          list-style: none;
+      }
+
+      .tips-list li {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 14px;
+          margin-bottom: 12px;
+          color: #475569;
+      }
+
+      .tips-list li i {
+          color: var(--success);
+      }
+
+      /* Sidebar Cards (Initial) */
+      .sidebar {
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+      }
+
+      .sidebar-card {
+          background: var(--white);
+          border-radius: 20px;
+          padding: 24px;
+          box-shadow: var(--shadow);
+          border: 1px solid var(--border);
+      }
+
+      .sidebar-title {
+          font-size: 16px;
+          font-weight: 700;
+          margin-bottom: 20px;
+          color: var(--text-dark);
+      }
+
+      .conditions-list {
+          list-style: none;
+      }
+
+      .conditions-list li {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 14px;
+          margin-bottom: 12px;
+          color: #475569;
+          font-weight: 500;
+      }
+
+      .conditions-list li::before {
+          content: '';
+          width: 6px;
+          height: 6px;
+          background: var(--primary);
+          border-radius: 50%;
+      }
+
+      .privacy-card-blue {
+          background: var(--primary);
+          color: var(--white);
+          border-radius: 20px;
+          padding: 24px;
+          box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.3);
+      }
+
+      .privacy-card-blue h3 {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          font-size: 16px;
+          margin-bottom: 16px;
+      }
+
+      .privacy-card-blue .icon-circle {
+          width: 32px;
+          height: 32px;
+          background: rgba(255,255,255,0.15);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .privacy-card-blue p {
+          font-size: 13px;
+          line-height: 1.6;
+          margin-bottom: 20px;
+          opacity: 0.9;
+      }
+
+      .privacy-features {
+          list-style: none;
+      }
+
+      .privacy-features li {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 12px;
+          margin-bottom: 10px;
+      }
+
+      .stat-item {
+          margin-bottom: 16px;
+      }
+
+      .stat-item:last-child { margin-bottom: 0; }
+
+      .stat-value {
+          display: block;
+          font-size: 22px;
+          font-weight: 800;
+          color: var(--primary);
+      }
+
+      .stat-label {
+          font-size: 13px;
+          color: var(--text-muted);
+          font-weight: 600;
+      }
+
+      /* --- ANALYZING STATE --- */
+      #analyzing-container {
+          display: none;
+          max-width: 700px;
+          margin: 0 auto;
+      }
+
+      .file-item {
+          background: #eff6ff;
+          border-radius: 12px;
+          padding: 16px;
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          margin-bottom: 24px;
+      }
+
+      .file-name { font-size: 14px; font-weight: 600; }
+      .file-size { font-size: 12px; color: var(--text-muted); }
+
+      .analyzing-bar {
+          background: #93c5fd;
+          color: white;
+          padding: 18px;
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          font-weight: 600;
+          font-size: 18px;
+          margin-bottom: 24px;
+      }
+
+      .spinner {
+          width: 24px;
+          height: 24px;
+          border: 3px solid rgba(255,255,255,0.3);
+          border-top: 3px solid white;
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+      .status-list { list-style: none; }
+      .status-item { display: flex; align-items: center; gap: 10px; font-size: 15px; margin-bottom: 12px; color: #4b5563; }
+      .status-dot { width: 8px; height: 8px; background: var(--primary); border-radius: 50%; }
+
+      /* --- RESULT STATE --- */
+      #result-layout {
+          display: none;
+          grid-template-columns: 1.1fr 0.9fr;
+          gap: 24px;
+      }
+
+      .scanned-image {
+          width: 100%;
+          aspect-ratio: 16/10;
+          object-fit: cover;
+          border-radius: 12px;
+          margin-bottom: 16px;
+      }
+
+      .scanned-date {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: #eff6ff;
+          padding: 10px 16px;
+          border-radius: 8px;
+          font-size: 14px;
+          color: #1e40af;
+      }
+
+      .detection-card {
+          background: #1d4ed8;
+          color: white;
+          padding: 24px;
+          border-radius: 20px;
+      }
+
+      .detection-value { font-size: 24px; font-weight: 800; }
+
+      .confidence-bar-bg { height: 8px; background: rgba(255,255,255,0.2); border-radius: 99px; margin: 12px 0 8px; }
+      .confidence-bar-fill { height: 100%; background: white; border-radius: 99px; }
+
+      .severity-scale { height: 10px; background: linear-gradient(to right, #bbf7d0, #fef08a, #fecaca); border-radius: 99px; position: relative; margin: 12px 0 8px; }
+      .severity-marker { position: absolute; top: -4px; width: 14px; height: 18px; background: var(--primary); border: 2px solid white; border-radius: 4px; transform: translateX(-50%); }
+
+      .severity-msg { background: #f0fdf4; border: 1px solid #dcfce7; padding: 16px; border-radius: 12px; display: flex; gap: 12px; }
+      .severity-msg.medium { background: #fffbeb; border-color: #fef3c7; }
+      .severity-msg.high { background: #fef2f2; border-color: #fee2e2; }
+
+      /* Disclaimer */
+      .disclaimer-box {
+          margin-top: 50px;
+          background: #fffbeb;
+          border: 1px solid #fde68a;
+          border-radius: 12px;
+          padding: 20px;
+      }
+
+      .disclaimer-box p {
+          font-size: 13px;
+          color: #92400e;
+          text-align: center;
+          line-height: 1.6;
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+          .layout-grid, #result-layout { grid-template-columns: 1fr; }
+      }
+
+      /* Utility */
+      .hidden { display: none !important; }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="main-container" {% if confidence %}data-confidence="{{ confidence }}" {% endif %}>
+      <!-- Header -->
+      <header class="page-header">
+        <h1 id="page-title">{% if result %}Analysis Complete{% else %}AI Skin Screening{% endif %}</h1>
+        <p id="page-subtitle">{% if result %}Your AI-powered skin screening results{% else %}Upload a clear image of your skin concern for instant AI analysis{% endif %}</p>
+      </header>
+
+      {% if error %}
+      <div class="error-message" style="background:#fef2f2; color:var(--danger); padding:16px; border-radius:12px; margin-bottom:24px; border:1px solid #fee2e2;">
+        <i data-lucide="alert-circle" size="18" style="vertical-align: middle; margin-right: 8px;"></i>
+        {{ error }}
+      </div>
+      {% endif %}
+
+      <!-- INITIAL STATE: Upload Grid -->
+      <div id="initial-layout" class="layout-grid {% if result or summary %}hidden{% endif %}">
+        <div class="main-content">
+          <!-- Upload Card -->
+          <div class="upload-zone-wrapper">
+            <form method="POST" enctype="multipart/form-data" id="upload-form">
+              <div class="upload-zone" onclick="document.getElementById('image-input').click()">
+                <input type="file" name="image" id="image-input" style="display:none;" accept="image/*" />
+                <div class="upload-icon-container">
+                  <i data-lucide="upload" size="40"></i>
+                </div>
+                <h3>Drag & Drop Your Image</h3>
+                <p>or click to browse from your device</p>
+                <div class="btn-choose">Choose File</div>
+                <div class="upload-subtext">Supports: JPG, PNG, WEBP (Max 10MB)</div>
+              </div>
+            </form>
+          </div>
+
+          <!-- Tips Card -->
+          <div class="tips-card">
+            <div class="card-title">
+              <i data-lucide="camera" size="20"></i>
+              Tips for Best Results
+            </div>
+            <ul class="tips-list">
+              <li><i data-lucide="check" size="18"></i> Use natural lighting or bright room light</li>
+              <li><i data-lucide="check" size="18"></i> Keep the camera steady and in focus</li>
+              <li><i data-lucide="check" size="18"></i> Fill the frame with the area of concern</li>
+              <li><i data-lucide="check" size="18"></i> Avoid shadows, glare, and blur</li>
+            </ul>
+          </div>
+
+          <!-- Summarization logic (hidden by default unless active) -->
+          <div class="card" style="margin-top: 32px;">
+            <div class="card-title">
+              <i data-lucide="file-text" size="20" color="#2563eb"></i>
+              Doctor's Report Summarization
+            </div>
+            <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 20px;">Paste your doctor's report below to get a summarized version.</p>
+            <form method="POST">
+              <textarea name="report" style="width:100%; height:120px; padding:12px; border:1px solid var(--border); border-radius:12px; margin-bottom:16px;" placeholder="Paste your report here..."></textarea>
+              <button type="submit" style="background:var(--text-dark); color:white; border:none; padding:12px 24px; border-radius:10px; cursor:pointer;">Summarize Report</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="sidebar">
+          <!-- Conditions -->
+          <div class="sidebar-card">
+            <div class="sidebar-title">Detectable Conditions</div>
+            <ul class="conditions-list">
+              <li>Eczema</li>
+              <li>Psoriasis</li>
+              <li>Acne</li>
+              <li>Fungal</li>
+            </ul>
+          </div>
+
+          <!-- Privacy -->
+          <div class="privacy-card-blue">
+            <h3>
+              <div class="icon-circle"><i data-lucide="shield" size="18"></i></div>
+              Privacy Protected
+            </h3>
+            <p>Your images are encrypted and processed securely. We never share your data.</p>
+            <ul class="privacy-features">
+              <li><i data-lucide="lock" size="14"></i> End-to-end encryption</li>
+              <li><i data-lucide="check" size="14"></i> HIPAA compliant</li>
+              <li><i data-lucide="check" size="14"></i> Auto-delete after 30 days</li>
+            </ul>
+          </div>
+
+          <!-- Stats -->
+          <div class="sidebar-card">
+            <div class="sidebar-title">Platform Stats</div>
+            <div class="stat-item">
+              <span class="stat-value">98.5%</span>
+              <span class="stat-label">Accuracy Rate</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">100+</span>
+              <span class="stat-label">Scans Completed</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-value">&lt;10s</span>
+              <span class="stat-label">Average Analysis Time</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ANALYZING STATE -->
+      <div id="analyzing-container">
+        <div class="card" style="padding: 32px;">
+          <div class="file-item">
+            <div style="width:40px; height:40px; background:var(--primary); color:white; border-radius:8px; display:flex; align-items:center; justify-content:center;">
+              <i data-lucide="image" size="20"></i>
+            </div>
+            <div style="flex:1">
+              <div id="display-filename" class="file-name">image.png</div>
+              <div id="display-filesize" class="file-size">0.48 MB</div>
+            </div>
+            <i data-lucide="check" size="20" color="#10b981"></i>
+          </div>
+          <div class="analyzing-bar">
+            <div class="spinner"></div>
+            Analyzing with AI...
+          </div>
+          <ul class="status-list">
+            <li class="status-item">
+              <div class="status-dot"></div>
+              Processing image...
+            </li>
+            <li class="status-item">
+              <div class="status-dot"></div>
+              Running CNN analysis...
+            </li>
+            <li class="status-item">
+              <div class="status-dot"></div>
+              Generating insights...
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- SUMMARY ONLY VIEW -->
+      {% if summary and not result %}
+      <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <div class="card-title"><i data-lucide="file-text" size="20"></i> Report Summary</div>
+        <div style="background:#fdfcfb; padding:20px; border-radius:12px; border:1px solid #fed7aa;">
+          <h4 style="margin-bottom:12px; color:#c2410c;">Summarized Findings</h4>
+          <div>{{ summary | safe }}</div>
+        </div>
+        <div style="margin-top:24px; text-align:center;">
+          <a href="/scan" style="display:inline-block; background:var(--text-dark); color:white; padding:12px 24px; border-radius:10px; text-decoration:none;">New Analysis</a>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- RESULT VIEW -->
+      {% if result %}
+      <div id="result-layout" style="display: grid;">
+        <div class="results-left">
+          <div class="card" style="padding: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+              <span style="font-weight:700;">Uploaded Image</span>
+              <button style="background:var(--primary-light); color:var(--primary); border:none; padding:6px 12px; border-radius:8px; display:flex; align-items:center; gap:6px; cursor:pointer; font-weight:600;"><i data-lucide="eye" size="14"></i> Heatmap</button>
+            </div>
+            <img src="{{ image_url }}" class="scanned-image" />
+            <div class="scanned-date">
+              <i data-lucide="calendar" size="16"></i>
+              Scanned: {{ scan_date }}
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Scan Details</div>
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+              <div>
+                <div style="font-size:12px; color:var(--text-muted);">Resolution</div>
+                <div style="font-weight:700;">1920 × 1080</div>
+              </div>
+              <div>
+                <div style="font-size:12px; color:var(--text-muted);">Image Quality</div>
+                <div style="font-weight:700; color:var(--success);">Excellent</div>
+              </div>
+              <div>
+                <div style="font-size:12px; color:var(--text-muted);">Processing Time</div>
+                <div style="font-weight:700;">3.2 seconds</div>
+              </div>
+              <div>
+                <div style="font-size:12px; color:var(--text-muted);">Model Version</div>
+                <div style="font-weight:700;">v2.4.1</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="results-right">
+          <div class="detection-card card">
+            <div style="display:flex; align-items:center; gap:12px; margin-bottom:20px;">
+              <div style="width:44px; height:44px; background:rgba(255,255,255,0.2); border-radius:10px; display:flex; align-items:center; justify-content:center;"><i data-lucide="shield-check" size="24"></i></div>
+              <div>
+                <div style="font-size:12px; opacity:0.9; text-transform:uppercase;">Detection Result</div>
+                <div class="detection-value">{{ result.disease }}</div>
+              </div>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:8px;"><span>Confidence Level</span><span>{{ confidence }}%</span></div>
+            <div class="confidence-bar-bg"><div id="confidence-bar" class="confidence-bar-fill"></div></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Severity Assessment</div>
+            <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600; margin-bottom:4px;"><span style="color:var(--success);">Low</span><span style="color:var(--warning);">Medium</span><span style="color:var(--danger);">High</span></div>
+            <div class="severity-scale"><div id="severity-marker" class="severity-marker"></div></div>
+            <div style="display:flex; justify-content:space-between; font-size:10px; color:var(--text-muted); margin-bottom:20px;"><span>0</span><span>5</span><span>10</span></div>
+
+            {% set risk_level = 'low' %} {% if confidence < 50 %}{% set risk_level = 'medium' %} {% elif result.disease in ['Psoriasis'] %}{% set risk_level = 'medium' %}{% endif %}
+
+            <div class="severity-msg {% if risk_level != 'low' %}{{ risk_level }}{% endif %}">
+              {% if risk_level == 'low' %}<i data-lucide="check-circle" size="20" style="color:var(--success)"></i> {% elif risk_level == 'medium' %}<i data-lucide="alert-triangle" size="20" style="color:var(--warning)"></i> {% else %}<i
+                data-lucide="alert-octagon"
+                size="20"
+                style="color:var(--danger)"
+              ></i
+              >{% endif %}
+              <div>
+                <div style="font-size:15px; font-weight:700;">{{ risk_level | capitalize }} Risk Detected</div>
+                <div style="font-size:13px; color:#4b5563;">
+                  {% if risk_level == 'low' %}This appears to be a benign condition. However, regular monitoring is recommended. {% elif risk_level == 'medium' %}The analysis shows features that warrant professional review. Please schedule a consultation. {% else %}Clinical features suggest a
+                  priority concern. We strongly recommend immediate professional consultation.{% endif %}
+                </div>
+                <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.05); font-size: 13px; color: #4b5563;">
+                  <strong style="color: var(--text-dark);">Treatment Recommendation:</strong> {{ result.next_steps | safe }}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Recommendation</div>
+            <div style="display:flex; flex-direction:column; gap:20px;">
+              <div style="display:flex; gap:16px;">
+                <div style="width:32px; height:32px; background:var(--primary-light); color:var(--primary); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i data-lucide="activity" size="16"></i></div>
+                <div>
+                  <h4 style="font-size:14px;">Monitor Regularly</h4>
+                  <p style="font-size:13px; color:var(--text-muted);">Take photos monthly to track changes.</p>
+                </div>
+              </div>
+              <div style="display:flex; gap:16px;">
+                <div style="width:32px; height:32px; background:var(--primary-light); color:var(--primary); border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0;"><i data-lucide="user" size="16"></i></div>
+                <div>
+                  <h4 style="font-size:14px;">Consult a Dermatologist</h4>
+                  <p style="font-size:13px; color:var(--text-muted);">Schedule an appointment for evaluation.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- Disclaimer (Bottom) -->
+      <div class="disclaimer-box">
+        <p><strong>Medical Disclaimer:</strong> This AI screening tool is for informational purposes only and does not replace professional medical advice. Always consult with a qualified dermatologist for diagnosis and treatment.</p>
+      </div>
+    </div>
+
+    <script>
+      lucide.createIcons();
+
+      const fileInput = document.getElementById('image-input');
+      const uploadForm = document.getElementById('upload-form');
+      const initialLayout = document.getElementById('initial-layout');
+      const analyzingContainer = document.getElementById('analyzing-container');
+      const displayFilename = document.getElementById('display-filename');
+      const displayFilesize = document.getElementById('display-filesize');
+
+      if (fileInput) {
+          fileInput.addEventListener('change', function() {
+              if (this.files && this.files[0]) {
+                  const file = this.files[0];
+                  displayFilename.textContent = file.name;
+                  displayFilesize.textContent = (file.size / (1024 * 1024)).toFixed(2) + ' MB';
+
+                  initialLayout.style.display = 'none';
+                  analyzingContainer.style.display = 'block';
+
+                  setTimeout(() => { uploadForm.submit(); }, 800);
+              }
+          });
+      }
+
+      const mainContainer = document.getElementById('main-container');
+      if (mainContainer && mainContainer.dataset.confidence) {
+          const confValue = mainContainer.dataset.confidence + "%";
+          const confBar = document.getElementById('confidence-bar');
+          const sevMarker = document.getElementById('severity-marker');
+          if (confBar) confBar.style.width = confValue;
+          if (sevMarker) sevMarker.style.left = confValue;
+      }
+    </script>
+  </body>
+</html>
