@@ -80,12 +80,12 @@ Deployment             | Render-Ready
 
 Disease     | Description                     | Confidence Threshold
 ------------|---------------------------------|---------------------
-Acne        | Inflammatory skin condition     | 83%+
-Eczema      | Chronic skin inflammation       | 85%+
-Psoriasis   | Autoimmune skin disorder        | 82%+
+Acne        | Inflammatory skin condition     | 93%+
+Eczema      | Chronic skin inflammation       | 95%+
+Psoriasis   | Autoimmune skin disorder        | 92%+
 Fungal      | Fungal infections               | 91%+
 Normal      | Healthy skin                    | 94%+
-Unknown     | Low confidence / Rare condition | < 84%
+Unknown     | Low confidence / Rare condition | < 90%
 
 ---
 
