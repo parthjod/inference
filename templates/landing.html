@@ -1,0 +1,902 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inferra - AI Skin Screening Made Simple</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+      :root {
+          --primary: #2563eb;
+          --primary-dark: #1d4ed8;
+          --primary-light: #eff6ff;
+          --text-dark: #0f172a;
+          --text-muted: #64748b;
+          --bg-light: #f8fafc;
+          --white: #ffffff;
+          --border: #e2e8f0;
+          --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+          margin: 0;
+          padding: 0;
+          box-sizing: border-box;
+          font-family: 'Inter', sans-serif;
+      }
+
+      body {
+          background-color: var(--white);
+          color: var(--text-dark);
+          line-height: 1.5;
+          overflow-x: hidden;
+      }
+
+      .container {
+          max-width: 1200px;
+          margin: 0 auto;
+          padding: 0 24px;
+      }
+
+      /* Hero Section */
+      .hero {
+          padding: 80px 0;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 60px;
+          align-items: center;
+      }
+
+      .hero-content .badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: var(--primary-light);
+          color: var(--primary);
+          padding: 6px 16px;
+          border-radius: 999px;
+          font-size: 13px;
+          font-weight: 600;
+          margin-bottom: 24px;
+      }
+
+      .hero-content h1 {
+          font-size: 56px;
+          font-weight: 800;
+          line-height: 1.1;
+          margin-bottom: 24px;
+          color: var(--text-dark);
+      }
+
+      .hero-content h1 span {
+          color: var(--primary);
+          display: block;
+      }
+
+      .hero-content p {
+          font-size: 18px;
+          color: var(--text-muted);
+          margin-bottom: 32px;
+          max-width: 500px;
+      }
+
+      .hero-ctas {
+          display: flex;
+          gap: 16px;
+          margin-bottom: 40px;
+      }
+
+      .btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          padding: 14px 28px;
+          border-radius: 12px;
+          font-weight: 600;
+          text-decoration: none;
+          transition: all 0.2s;
+          cursor: pointer;
+      }
+
+      .btn-primary {
+          background: var(--primary);
+          color: var(--white);
+      }
+
+      .btn-primary:hover {
+          background: var(--primary-dark);
+          transform: translateY(-2px);
+      }
+
+      .btn-outline {
+          background: var(--white);
+          color: var(--primary);
+          border: 1px solid var(--border);
+      }
+
+      .btn-outline:hover {
+          background: var(--primary-light);
+      }
+
+      .hero-trust {
+          display: flex;
+          gap: 24px;
+      }
+
+      .trust-item {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          font-size: 14px;
+          font-weight: 500;
+          color: #10b981;
+      }
+
+      .hero-image-container {
+          position: relative;
+      }
+
+      .hero-image {
+          width: 100%;
+          border-radius: 24px;
+          box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      }
+
+      .stat-card {
+          position: absolute;
+          background: var(--white);
+          padding: 16px 20px;
+          border-radius: 16px;
+          box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+      }
+
+      .stat-card.top-right {
+          top: -20px;
+          right: -20px;
+      }
+
+      .stat-card.bottom-left {
+          bottom: 20px;
+          left: -30px;
+      }
+
+      .stat-value {
+          font-size: 24px;
+          font-weight: 800;
+          color: var(--primary);
+      }
+
+      .stat-label {
+          font-size: 12px;
+          font-weight: 600;
+          color: var(--text-muted);
+      }
+
+      /* Features Bar */
+      .features-bar {
+          background: #f8fafc;
+          padding: 40px 0;
+          margin-bottom: 80px;
+      }
+
+      .features-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+      }
+
+      .feature-item {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          background: var(--white);
+          padding: 24px;
+          border-radius: 16px;
+          box-shadow: var(--shadow);
+      }
+
+      .feature-icon {
+          width: 48px;
+          height: 48px;
+          background: var(--primary-light);
+          color: var(--primary);
+          border-radius: 12px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+      }
+
+      .feature-info h4 {
+          font-size: 16px;
+          font-weight: 700;
+      }
+
+      .feature-info p {
+          font-size: 13px;
+          color: var(--text-muted);
+      }
+
+      /* How It Works */
+      .section-header {
+          text-align: center;
+          margin-bottom: 60px;
+      }
+
+      .section-header h2 {
+          font-size: 36px;
+          font-weight: 800;
+          margin-bottom: 12px;
+      }
+
+      .section-header p {
+          color: var(--text-muted);
+          font-size: 18px;
+      }
+
+      .steps-container {
+          display: grid;
+          grid-template-columns: 1fr auto 1fr auto 1fr;
+          gap: 20px;
+          align-items: flex-start;
+          margin-bottom: 100px;
+      }
+
+      .step-card {
+          background: var(--white);
+          padding: 32px;
+          border-radius: 20px;
+          box-shadow: var(--shadow);
+          border: 1px solid var(--border);
+          text-align: left;
+      }
+
+      .step-icon {
+          width: 56px;
+          height: 56px;
+          background: var(--primary);
+          color: var(--white);
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 24px;
+      }
+
+      .step-card span {
+          font-size: 14px;
+          font-weight: 700;
+          color: var(--primary);
+          display: block;
+          margin-bottom: 8px;
+      }
+
+      .step-card h3 {
+          font-size: 20px;
+          margin-bottom: 12px;
+      }
+
+      .step-card p {
+          color: var(--text-muted);
+          font-size: 15px;
+      }
+
+      .step-arrow {
+          padding-top: 100px;
+          color: var(--border);
+      }
+
+      /* Trusted Data */
+      .data-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 24px;
+          margin-bottom: 60px;
+      }
+
+      .data-card {
+          padding: 40px;
+          border-radius: 20px;
+          border: 1px solid var(--border);
+          transition: all 0.3s;
+      }
+
+      .data-card.featured {
+          background: var(--primary);
+          color: var(--white);
+          border: none;
+      }
+
+      .data-card .icon {
+          margin-bottom: 24px;
+          color: var(--primary);
+      }
+
+      .data-card.featured .icon {
+          color: var(--white);
+      }
+
+      .data-card h3 {
+          font-size: 32px;
+          font-weight: 800;
+          margin-bottom: 8px;
+      }
+
+      .data-card .label {
+          font-weight: 600;
+          margin-bottom: 16px;
+          display: block;
+      }
+
+      .data-card p {
+          font-size: 14px;
+          opacity: 0.8;
+      }
+
+      .conditions-pill {
+          background: var(--white);
+          border: 1px solid var(--border);
+          padding: 16px;
+          border-radius: 999px;
+          display: flex;
+          justify-content: center;
+          gap: 12px;
+          flex-wrap: wrap;
+          margin: 40px auto 100px;
+          max-width: 1000px;
+      }
+
+      .condition-tag {
+          padding: 8px 16px;
+          font-size: 13px;
+          font-weight: 600;
+          color: var(--text-muted);
+          border-right: 1px solid var(--border);
+      }
+
+      .condition-tag:last-child {
+          border-right: none;
+      }
+
+      /* Medical Grade Analysis Section */
+      .medical-section {
+          padding: 100px 0;
+          background: linear-gradient(to right, #ffffff, #f0f7ff);
+          margin-bottom: 80px;
+          border-top: 1px solid var(--border);
+          border-bottom: 1px solid var(--border);
+      }
+
+      .medical-content h2 {
+          font-size: 44px;
+          font-weight: 800;
+          letter-spacing: -0.02em;
+          margin-bottom: 4px;
+          color: var(--text-dark);
+      }
+
+      .medical-content .subtitle {
+          font-size: 34px;
+          color: var(--primary);
+          font-weight: 700;
+          margin-bottom: 24px;
+          display: block;
+      }
+
+      .medical-content p {
+          color: var(--text-muted);
+          margin-bottom: 48px;
+          font-size: 18px;
+          line-height: 1.6;
+          max-width: 520px;
+      }
+
+      .medical-features {
+          display: flex;
+          flex-direction: column;
+          gap: 32px;
+      }
+
+      .med-feat-item {
+          display: flex;
+          gap: 20px;
+          padding: 12px;
+          border-radius: 16px;
+          transition: all 0.3s ease;
+          border: 1px solid transparent;
+      }
+
+      .med-feat-item:hover {
+          background: var(--white);
+          border-color: var(--border);
+          box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+          transform: translateX(10px);
+      }
+
+      .med-feat-icon {
+          width: 52px;
+          height: 52px;
+          background: var(--white);
+          color: var(--primary);
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+          box-shadow: 0 8px 16px rgba(37, 99, 235, 0.1);
+          border: 1px solid var(--primary-light);
+      }
+
+      .med-feat-info h4 {
+          font-size: 17px;
+          font-weight: 700;
+          margin-bottom: 4px;
+          color: var(--text-dark);
+      }
+
+      .med-feat-info p {
+          font-size: 14px;
+          color: var(--text-muted);
+          margin-bottom: 0;
+          line-height: 1.4;
+      }
+
+      .medical-image-wrapper {
+          position: relative;
+          padding: 20px;
+      }
+
+      .medical-image {
+          width: 100%;
+          border-radius: 24px;
+          box-shadow:
+              0 20px 40px -10px rgba(0,0,0,0.1),
+              0 0 0 12px var(--white);
+          position: relative;
+          z-index: 2;
+      }
+
+      .medical-image-accent {
+          position: absolute;
+          top: -20px;
+          right: -20px;
+          width: 140px;
+          height: 140px;
+          background: var(--primary-light);
+          border-radius: 50%;
+          z-index: 1;
+          filter: blur(40px);
+          opacity: 0.6;
+      }
+
+      /* Accessibility Section */
+      .access-section {
+          text-align: center;
+          padding: 80px 0;
+      }
+
+      .access-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 40px;
+          margin-top: 60px;
+      }
+
+      .access-item {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+      }
+
+      .access-icon {
+          width: 64px;
+          height: 64px;
+          background: var(--primary-light);
+          color: var(--primary);
+          border-radius: 16px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 24px;
+      }
+
+      .access-item h3 {
+          font-size: 20px;
+          margin-bottom: 12px;
+      }
+
+      .access-item p {
+          color: var(--text-muted);
+          font-size: 15px;
+          max-width: 280px;
+          margin: 0 auto;
+      }
+
+      /* CTA Banner */
+      .cta-banner {
+          background: var(--primary);
+          color: var(--white);
+          padding: 80px 0;
+          text-align: center;
+          border-radius: 0;
+          margin-top: 80px;
+      }
+
+      .cta-banner h2 {
+          font-size: 40px;
+          font-weight: 800;
+          margin-bottom: 16px;
+      }
+
+      .cta-banner p {
+          font-size: 18px;
+          opacity: 0.9;
+          margin-bottom: 40px;
+      }
+
+      .btn-white {
+          background: var(--white);
+          color: var(--primary);
+      }
+
+      /* Footer */
+      footer {
+          background: #0a0f1d;
+          color: var(--white);
+          padding: 80px 0 40px;
+      }
+
+      .footer-grid {
+          display: grid;
+          grid-template-columns: 2fr 1fr 1fr 1fr;
+          gap: 60px;
+          margin-bottom: 60px;
+      }
+
+      .footer-logo {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 20px;
+          font-weight: 800;
+          margin-bottom: 20px;
+      }
+
+      .footer-about p {
+          color: #94a3b8;
+          font-size: 14px;
+          max-width: 250px;
+      }
+
+      .footer-column h4 {
+          font-size: 16px;
+          font-weight: 700;
+          margin-bottom: 24px;
+      }
+
+      .footer-column ul {
+          list-style: none;
+      }
+
+      .footer-column ul li {
+          margin-bottom: 12px;
+      }
+
+      .footer-column ul li a {
+          color: #94a3b8;
+          text-decoration: none;
+          font-size: 14px;
+          transition: color 0.2s;
+      }
+
+      .footer-column ul li a:hover {
+          color: var(--white);
+      }
+
+      .footer-bottom {
+          border-top: 1px solid #1e293b;
+          padding-top: 40px;
+          text-align: center;
+          color: #64748b;
+          font-size: 13px;
+      }
+
+      @media (max-width: 992px) {
+          .hero, .medical-section {
+              grid-template-columns: 1fr;
+              text-align: center;
+          }
+          .hero-content p {
+              margin: 0 auto 32px;
+          }
+          .hero-ctas, .hero-trust {
+              justify-content: center;
+          }
+          .steps-container {
+              grid-template-columns: 1fr;
+          }
+          .step-arrow {
+              transform: rotate(90deg);
+              padding: 20px 0;
+          }
+          .data-grid, .access-grid, .features-grid, .footer-grid {
+              grid-template-columns: 1fr;
+          }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Hero Section -->
+      <section class="hero">
+        <div class="hero-content">
+          <div class="badge">
+            <i data-lucide="shield-check" size="16"></i>
+            AI-Powered Dermatology
+          </div>
+          <h1>AI Skin Screening <span>Made Simple</span></h1>
+          <p>Advanced CNN-based deep learning technology that analyzes your skin concerns with medical-grade precision. Empowering early detection for patients and professionals.</p>
+
+          <div class="hero-ctas">
+            <a href="/scan" class="btn btn-primary">
+              <i data-lucide="upload-cloud" size="18"></i>
+              Upload Skin Image
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="trust-item">
+              <i data-lucide="check-circle-2" size="16"></i>
+              Non-Invasive
+            </div>
+            <div class="trust-item">
+              <i data-lucide="shield-check" size="16"></i>
+              Privacy First
+            </div>
+            <div class="trust-item">
+              <i data-lucide="zap" size="16"></i>
+              Instant Results
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-image-container">
+          <img src="/static/microscope_specialist.png" alt="Medical Analysis" class="hero-image" />
+          <div class="stat-card top-right">
+            <span class="stat-value">98.5%</span>
+            <span class="stat-label">Accuracy rate</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Features Bar -->
+    <div class="features-bar">
+      <div class="container">
+        <div class="features-grid">
+          <div class="feature-item">
+            <div class="feature-icon"><i data-lucide="cpu" size="24"></i></div>
+            <div class="feature-info">
+              <h4>CNN Deep Learning</h4>
+              <p>AI-Powered Analysis</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i data-lucide="database" size="24"></i></div>
+            <div class="feature-info">
+              <h4>25k+ Training Images</h4>
+              <p>Medical-Grade Precision</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon"><i data-lucide="award" size="24"></i></div>
+            <div class="feature-info">
+              <h4>DermNet</h4>
+              <p>Verified Datasets</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- How It Works -->
+      <section id="how" class="section-header">
+        <h2>How It Works</h2>
+        <p>Three simple steps to your skin health insights</p>
+      </section>
+
+      <div class="steps-container">
+        <div class="step-card">
+          <div class="step-icon"><i data-lucide="upload" size="24"></i></div>
+          <span>Step 1</span>
+          <h3>Upload Image</h3>
+          <p>Simply upload a clear photo of your skin concern for analysis.</p>
+        </div>
+        <div class="step-arrow"><i data-lucide="chevron-right" size="32"></i></div>
+        <div class="step-card">
+          <div class="step-icon"><i data-lucide="scan-search" size="24"></i></div>
+          <span>Step 2</span>
+          <h3>AI Analysis</h3>
+          <p>Our neural network processes your image with medical precision.</p>
+        </div>
+        <div class="step-arrow"><i data-lucide="chevron-right" size="32"></i></div>
+        <div class="step-card">
+          <div class="step-icon"><i data-lucide="file-text" size="24"></i></div>
+          <span>Step 3</span>
+          <h3>Get Insights</h3>
+          <p>Receive a priority analysis and insight report instantly.</p>
+        </div>
+      </div>
+
+      <!-- Trusted Medical Data -->
+      <section class="section-header">
+        <h2>Trusted Medical Data</h2>
+        <p>Trained on comprehensive Dermatology Datasets</p>
+      </section>
+
+      <div class="data-grid">
+        <div class="data-card featured">
+          <div class="icon"><i data-lucide="database" size="32"></i></div>
+          <h3>25,000+</h3>
+          <span class="label">Training Images</span>
+          <p>Diverse dataset covering various skin types and chronic conditions.</p>
+        </div>
+        <div class="data-card">
+          <div class="icon"><i data-lucide="microscope" size="32"></i></div>
+          <span class="label">DermNet</span>
+          <p>Large, curated collection of dermatoscopic images for skin disease and cancer analysis.</p>
+        </div>
+        <div class="data-card">
+          <div class="icon"><i data-lucide="shield" size="32"></i></div>
+          <span class="label">SD-198</span>
+          <p>Annotated dermatology image dataset created for academic research and clinical training.</p>
+        </div>
+      </div>
+
+      <section class="section-header" style="margin-bottom: 20px;">
+        <p style="font-weight: 700; color: var(--text-dark);">Detectable Conditions</p>
+      </section>
+      <div class="conditions-pill">
+        <div class="condition-tag">Eczema</div>
+        <div class="condition-tag">Psoriasis</div>
+        <div class="condition-tag">Acne</div>
+        <div class="condition-tag">Fungal</div>
+      </div>
+    </div>
+
+    <!-- Medical Grade Analysis Section -->
+    <div class="medical-section">
+      <div class="container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 100px; align-items: center;">
+        <div class="medical-content">
+          <h2>Medical-Grade Analysis</h2>
+          <span class="subtitle">In Seconds</span>
+          <p>Our AI-powered platform provides instant analysis with detailed insights, priority scoring, and personalized recommendations—all in an easy-to-understand dashboard.</p>
+
+          <div class="medical-features">
+            <div class="med-feat-item">
+              <div class="med-feat-icon">
+                <i data-lucide="activity" size="24"></i>
+              </div>
+              <div class="med-feat-info">
+                <h4>Real-time Processing</h4>
+                <p>Get results in under 10 seconds with optimized cloud inference.</p>
+              </div>
+            </div>
+            <div class="med-feat-item">
+              <div class="med-feat-icon">
+                <i data-lucide="bar-chart-3" size="24"></i>
+              </div>
+              <div class="med-feat-info">
+                <h4>Confidence Scoring</h4>
+                <p>Transparent AI-driven evaluation levels matched with clinical benchmarks.</p>
+              </div>
+            </div>
+            <div class="med-feat-item">
+              <div class="med-feat-icon">
+                <i data-lucide="lock" size="24"></i>
+              </div>
+              <div class="med-feat-info">
+                <h4>Privacy Protected</h4>
+                <p>HIPAA-compliant data encryption ensures your scans stay yours.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="medical-image-wrapper">
+          <div class="medical-image-accent"></div>
+          <img src="/static/dermatology_clinic_entrance.png" alt="Clinical Environment" class="medical-image" />
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <!-- Accessibility Section -->
+      <section class="access-section">
+        <div class="section-header">
+          <h2>Making Healthcare Accessible</h2>
+          <p>Empowering communities with early detection technology</p>
+        </div>
+
+        <div class="access-grid">
+          <div class="access-item">
+            <div class="access-icon"><i data-lucide="users" size="32"></i></div>
+            <h3>Students</h3>
+            <p>Free access to skin health screening for college students worldwide.</p>
+          </div>
+          <div class="access-item">
+            <div class="access-icon"><i data-lucide="globe" size="32"></i></div>
+            <h3>Rural Areas</h3>
+            <p>Bringing dermatology screening to remote rural communities.</p>
+          </div>
+          <div class="access-item">
+            <div class="access-icon"><i data-lucide="heart" size="32"></i></div>
+            <h3>Early Detection</h3>
+            <p>Helping identify potential concerns before they become serious.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- CTA Banner -->
+    <div class="cta-banner">
+      <div class="container">
+        <h2>Ready to Check Your Skin Health?</h2>
+        <p>Start your free AI-powered skin analysis in minutes</p>
+        <a href="/scan" class="btn btn-white">
+          <i data-lucide="sparkles" size="18"></i>
+          Start Your Scan
+        </a>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-about">
+            <div class="footer-logo">
+              <i data-lucide="shield-plus" size="24" color="#2563eb"></i>
+              Dermat
+            </div>
+            <p>Advanced AI technology powering skin health for everyone.</p>
+          </div>
+          <div class="footer-column">
+            <h4>Product</h4>
+            <ul>
+              <li><a href="#">Features</a></li>
+              <li><a href="#">Pricing</a></li>
+              <li><a href="#">Scans Library</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Resources</h4>
+            <ul>
+              <li><a href="#">Documentation</a></li>
+              <li><a href="#">Research</a></li>
+              <li><a href="#">About Us</a></li>
+            </ul>
+          </div>
+          <div class="footer-column">
+            <h4>Legal</h4>
+            <ul>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Disclaimer</a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 Dermat. Medical device not intended to replace professional diagnosis.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      lucide.createIcons();
+    </script>
+  </body>
+</html>

@@ -68,7 +68,7 @@ device = "cpu"
 model = SkinDiseaseModel(len(disease_classes))
 
 checkpoint = torch.load(
-    "model/skin_disease_dermnet.pth",
+    "model/skin_dermnet_model.pth",
     map_location=device
 )
 
@@ -111,7 +111,7 @@ def linkify(text):
 raw_next_steps = {
 
     "Acne":
-    "For mild acne, use Benzac AC (https://tinyurl.com/8ywvzn5m). If persistent, consult dermatologist.",
+    "For acne, use Benzac AC (https://tinyurl.com/8ywvzn5m). If persistent, consult dermatologist.",
 
     "Eczema":
     "Moisturize regularly. Hydrocortisone cream may help (https://tinyurl.com/43hmwb7v).",
@@ -230,10 +230,23 @@ def scan():
 
             try:
 
-                prompt = (
-                    "Summarize doctor's report into simple bullet points:\n\n"
-                    f"{report_text}"
-                )
+                prompt = f"""
+
+                    You are a medical assistant.
+
+                    Summarize the following doctor's report into clean, structured HTML.
+
+                    Rules:
+                    - Use proper HTML tags only (no markdown symbols like *, **, #).
+                    - Use <h4> for section headings.
+                    - Use <ul> and <li> for bullet points.
+                    - Keep it clean and professional.
+                    - Do NOT add any extra commentary.
+
+                    Doctor's Report:
+                    {report_text}
+                    """
+
 
                 response = gemini_client.models.generate_content(
                     model=GEMINI_MODEL,
