@@ -1,151 +1,154 @@
-```markdown
-# 🔬 inference
-### Your Pocket Dermatology Assistant
+🔬 Inference
+Your Pocket Dermatology Assistant
 
-<p align="center">
-  <img src="https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white" alt="Flask">
-  <img src="https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white" alt="PyTorch">
-  <img src="https://img.shields.io/badge/ResNet-50-Deep%20Learning-blue?style=for-the-badge" alt="ResNet50">
-  <img src="https://img.shields.io/badge/Gemini-API-8E44AD?style=for-the-badge&logo=google&logoColor=white" alt="Gemini API">
-</p>
+![Flask](https://img.shields.io/badge/Flask-000000?style=for-the-badge&logo=flask&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![ResNet50](https://img.shields.io/badge/ResNet50-Deep%20Learning-blue?style=for-the-badge)
+![Gemini API](https://img.shields.io/badge/Gemini-API-8E44AD?style=for-the-badge&logo=google&logoColor=white)
 
----
+────────────────────────────────────────
 
-## 🎯 What is inference?
+🎯 What is Inference?
 
-**inference** is a cutting-edge skin disease detection system that leverages the power of deep learning to analyze dermatoscopic images and provide instant preliminary diagnoses. Built with precision, empathy, and accessibility in mind, it bridges the gap between advanced AI technology and everyday healthcare needs.
+Inference is a cutting-edge skin disease detection system that leverages deep learning to analyze dermatoscopic images and provide instant preliminary diagnoses.
 
-> *"Healthcare shouldn't be a privilege. It should be a tap away."*
+Built with precision, empathy, and accessibility in mind, it bridges the gap between advanced AI technology and everyday healthcare needs.
 
----
+"Healthcare shouldn't be a privilege. It should be a tap away."
 
-## 🧠 How It Works
+────────────────────────────────────────
 
-```
+🧠 How It Works
 
-┌─────────────┐ ┌──────────────┐ ┌─────────────────┐ ┌──────────────┐ │ Upload │───▶│ ResNet50 │───▶│ Confidence │───▶│ Treatment │ │ Skin Image │ │ Inference │ │ Thresholding │ │ Recommen- │ │ │ │ │ │ (60%) │ │ dations │ └─────────────┘ └──────────────┘ └─────────────────┘ └──────────────┘ │ ▼ ┌──────────────────┐ │ Unknown Class │ │ Detection │ └──────────────────┘
+┌─────────────┐      ┌──────────────┐      ┌─────────────────┐      ┌──────────────┐
+│ Upload      │ ───▶ │ ResNet50     │ ───▶ │ Confidence      │ ───▶ │ Treatment    │
+│ Skin Image  │      │ Inference    │      │ Thresholding    │      │ Recommen-    │
+│             │      │              │      │ (60%)           │      │ dations      │
+└─────────────┘      └──────────────┘      └─────────────────┘      └──────────────┘
+                             │
+                             ▼
+                     ┌──────────────────┐
+                     │ Unknown Class    │
+                     │ Detection        │
+                     └──────────────────┘
 
-```
+────────────────────────────────────────
 
-### The Magic Under the Hood
+✨ The Magic Under the Hood
 
-| Component | Technology |
-|-----------|------------|
-| **Backend** | Flask (Python) |
-| **Deep Learning** | PyTorch + ResNet50 |
-| **Image Processing** | PIL, TorchVision |
-| **NLP Enhancement** | Google Gemini API |
-| **Deployment** | Render-Ready |
+Component              | Technology
+-----------------------|-------------------------
+Backend                | Flask (Python)
+Deep Learning          | PyTorch + ResNet50
+Image Processing       | PIL, TorchVision
+NLP Enhancement        | Google Gemini API
+Deployment             | Render-Ready
 
----
+────────────────────────────────────────
 
-## 🩺 Detectable Conditions
+🩺 Detectable Conditions
 
-| Disease | Description | Confidence Threshold |
-|---------|-------------|---------------------|
-| **Acne** | Inflammatory skin condition | 83%+ |
-| **Eczema** | Chronic skin inflammation | 85%+ |
-| **Psoriasis** | Autoimmune skin disorder | 82%+ |
-| **Fungal** | Fungal infections | 91%+ |
-| **Normal** | Healthy skin | 94%+ |
-| **Unknown** | Low confidence / Rare condition | < 84% |
+Disease     | Description                     | Confidence Threshold
+------------|---------------------------------|---------------------
+Acne        | Inflammatory skin condition     | 83%+
+Eczema      | Chronic skin inflammation       | 85%+
+Psoriasis   | Autoimmune skin disorder        | 82%+
+Fungal      | Fungal infections               | 91%+
+Normal      | Healthy skin                    | 94%+
+Unknown     | Low confidence / Rare condition | < 84%
 
----
+────────────────────────────────────────
 
-## ✨ Key Features
+✨ Key Features
 
-### 🔍 Intelligent Image Analysis
-- State-of-the-art **ResNet50** architecture fine-tuned on dermatological data
+🔍 Intelligent Image Analysis
+- ResNet50 architecture fine-tuned on dermatological data
 - Robust preprocessing pipeline with ImageNet normalization
-- Handles images of varying quality with grace
+- Handles varying image quality gracefully
 
-### 🛡️ Smart Uncertainty Handling
-- Built-in **confidence thresholding** prevents unreliable predictions
-- Gracefully handles unknown conditions with "Unknown" classification
+🛡️ Smart Uncertainty Handling
+- Built-in confidence thresholding prevents unreliable predictions
+- Gracefully handles unknown conditions
 - Encourages professional medical consultation when needed
 
-### 💊 Actionable Recommendations
-- Every diagnosis comes with **curated treatment suggestions**
-- Direct links to verified medical products and resources
+💊 Actionable Recommendations
+- Every diagnosis includes curated treatment suggestions
+- Direct links to verified medical resources
 - Clear guidance on when to consult a dermatologist
 
-### 📄 Doctor Report Summarization
-- Paste any doctor's report and let **Gemini AI** transform it into clean, structured HTML
+📄 Doctor Report Summarization
+- Paste any doctor's report and let Gemini AI transform it into structured output
 - Extract key insights instantly
 - Professional formatting for easy understanding
 
----
+────────────────────────────────────────
 
-## 🚀 Getting Started
+🚀 Getting Started
 
-### Prerequisites
+Prerequisites
 
-```
+Python 3.8+
+pip
+virtualenv
 
-Python 3.8+ pip virtualenv
+Installation
 
-````
-
-### Installation
-
-```bash
-# Clone the repository
+Clone the repository
 git clone https://github.com/yourusername/inference.git
 cd inference
 
-# Create virtual environment
+Create virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+source venv/bin/activate
+(On Windows: venv\Scripts\activate)
 
-# Install dependencies
+Install dependencies
 pip install -r requirements.txt
-````
 
-### Environment Setup
+────────────────────────────────────────
 
-Create a `.env` file in the root directory:
+Environment Setup
 
-```env
+Create a .env file in the root directory:
+
 GEMINI_API_KEY=your_gemini_api_key_here
 PORT=10000
-```
 
-> 🔑 **Get your Gemini API key**: Visit [Google AI Studio](https://aistudio.google.com/app/apikey)
+Get your Gemini API key:
+https://aistudio.google.com/app/apikey
 
-### Run the Application
+────────────────────────────────────────
 
-```bash
+Run the Application
+
 python app.py
-```
 
-The app will be live at `http://localhost:10000`
+The app will be live at:
+http://localhost:10000
 
----
+────────────────────────────────────────
 
-## 📁 Project Structure
+📁 Project Structure
 
-```
 inference/
-├── app.py                      # Main Flask application
+├── app.py
 ├── model/
-│   └── skin_dermnet_model.pth # Trained ResNet50 weights
+│   └── skin_dermnet_model.pth
 ├── templates/
-│   ├── index.html             # Main scan interface
-│   └── landing.html           # Landing page
+│   ├── index.html
+│   └── landing.html
 ├── static/
-│   ├── uploads/               # Image upload directory
-│   └── *.png                  # Static assets
-├── requirements.txt           # Python dependencies
-└── README.md                  # This file
-```
+│   ├── uploads/
+│   └── *.png
+├── requirements.txt
+└── README.md
 
----
+────────────────────────────────────────
 
-## 🏗️ Architecture Deep Dive
+🏗️ Architecture Deep Dive
 
-### Model Architecture
+Model Architecture
 
-```python
 SkinDiseaseModel(nn.Module)
 ├── backbone: ResNet50 (pretrained=False)
 │   └── fc: Identity()
@@ -153,57 +156,52 @@ SkinDiseaseModel(nn.Module)
     ├── Linear(2048 → 256)
     ├── ReLU()
     ├── Dropout(0.4)
-    └── Linear(256 → 5)  # 5 classes
-```
+    └── Linear(256 → 5)
 
-### Image Preprocessing Pipeline
+Image Preprocessing Pipeline
 
-1. **Resize** → 224×224 pixels
-2. **ToTensor** → Convert to tensor [0, 1]
-3. **Normalize** → ImageNet stats (mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+1. Resize → 224×224 pixels
+2. ToTensor → Convert to tensor [0, 1]
+3. Normalize → ImageNet stats
+   mean = [0.485, 0.456, 0.406]
+   std  = [0.229, 0.224, 0.225]
 
----
+────────────────────────────────────────
 
-## 🔐 Safety & Disclaimer
+🔐 Safety & Disclaimer
 
-<div align="center">
+⚠️ IMPORTANT DISCLAIMER ⚠️
 
-⚠️ **IMPORTANT DISCLAIMER** ⚠️
+Inference is NOT a medical device.
 
-**inference is NOT a medical device.**
+This tool is intended for educational and informational purposes only.
+It is NOT a substitute for professional medical advice, diagnosis, or treatment.
+Always seek the advice of a qualified healthcare provider regarding any medical condition.
 
-This tool is intended for educational and informational purposes only. It is NOT a substitute for professional medical advice, diagnosis, or treatment. Always seek the advice of a qualified healthcare provider with any questions you may have regarding a medical condition.
+────────────────────────────────────────
 
-</div>
+🤝 Contributing
 
----
+1. Fork the repository
+2. Create your feature branch:
+   git checkout -b feature/amazing-feature
+3. Commit your changes:
+   git commit -m "Add some amazing feature"
+4. Push to the branch:
+   git push origin feature/amazing-feature
+5. Open a Pull Request
 
-## 🤝 Contributing
+────────────────────────────────────────
 
-We welcome contributions! Here's how you can help:
+🏆 Acknowledgments
 
-1. **Fork** the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a **Pull Request**
+- DermNet for the training dataset
+- PyTorch team for the deep learning framework
+- Google Gemini for NLP capabilities
+- You, for building the future of healthcare
 
----
+────────────────────────────────────────
 
-## 🏆 Acknowledgments
+⭐ If this project helped you, don’t forget to star it!
 
-- **DermNet** for the training dataset
-- **PyTorch** team for the amazing deep learning framework
-- **Google Gemini** for NLP capabilities
-- **You** for being curious and building the future of healthcare
-
----
-
-<div align="center">
-
-### ⭐ If this project helped you, don't forget to star it!
-
-_"The best way to predict the future is to invent it."_ — Alan Kay
-
-</div>
-```
+"The best way to predict the future is to invent it." — Alan Kay
